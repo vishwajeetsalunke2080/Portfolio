@@ -14,9 +14,9 @@ const ProjectCard = ({ projects }) => {
                                 <p className="text-gray-700 text-justify mt-[2em]">{e.body}</p>
                                 <div className="flex justify-around items-center flex-wrap"> 
                                 {
-                                    e.tags.map((xe)=>{
+                                    e.tags.map((xe, index)=>{
                                         return(                                            
-                                            <div className="rounded-full bg-sky-200 border-1 border-black p-3 text-black mt-3">{xe}</div>
+                                            <div className="rounded-full bg-sky-200 border-1 border-black p-3 text-black mt-3" key={index}>{xe}</div>
                                         )
                                     })
                                 }

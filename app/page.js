@@ -122,7 +122,7 @@ const Home = () => {
     </div>
 
     <div className='flex justify-start lg:text-8xl min-h-[3em] mb-[0.5em] mt-[2em] items-center ms-[1em]'>
-      <div><span className='mx-2'>Hello I'm </span><div class="gradient-text p-2 font-bold">Vishwajeet Salunke</div></div>
+      <div><span className='mx-2'>Hello I&apos;m </span><div class="gradient-text p-2 font-bold">Vishwajeet Salunke</div></div>
     </div>
 
     <section id="about">
