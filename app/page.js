@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import ProjectCard from "./Components/Card";
 import EducationTimeline from "./Components/Education";
@@ -6,6 +8,9 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import Skills from "./Components/Skills";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/all";
 
 const projectInfo = [
   {
@@ -61,77 +66,115 @@ const experience = [
     type: "Internship",
     location: "Cybernetics Security Shells Pvt. Ltd., Hadapsar, Pune",
     year: "Oct 2023 - June 2024",
-    score:"Asp.net | MS SQL | Next.JS"
+    score: "Asp.net | MS SQL | Next.JS"
   },
 ]
 
 const skills = [
   {
-    type:"MongoDB",
-    img:"mongodbsvg.svg"
+    type: "MongoDB",
+    img: "mongodbsvg.svg"
   },
   {
-    type:"React.JS",
-    img:"reactjs.svg"
+    type: "React.JS",
+    img: "reactjs.svg"
   },
   {
-    type:"Node.JS",
-    img:"nodejs-1-logo.svg"
+    type: "Node.JS",
+    img: "nodejs-1-logo.svg"
   },
   {
-    type:"Java SE",
-    img:"java.svg"
+    type: "Java SE",
+    img: "java.svg"
   },
   {
-    type:"C++",
-    img:"c-plus-plus.svg"
+    type: "C++",
+    img: "c-plus-plus.svg"
   },
   {
-    type:"Git",
-    img:"git.svg"
+    type: "Git",
+    img: "git.svg"
   },
   {
-    type:"MySQL",
-    img:"mysql.svg"
+    type: "MySQL",
+    img: "mysql.svg"
   },
   {
-    type:"Microsoft Azure",
-    img:"azure.svg"
+    type: "Microsoft Azure",
+    img: "azure.svg"
   },
   {
-    type:"Azure DevOps",
-    img:"azure-devops.svg"
+    type: "Azure DevOps",
+    img: "azure-devops.svg"
   },
   {
-    type:"Next.JS",
-    img:"next-js.svg"
+    type: "Next.JS",
+    img: "next-js.svg"
   },
 ]
 
 const Nav = ["About", "Projects", "Education"]
 
 
-
 const Home = () => {
+  const socialRef = useRef()
+  const aboutRef = useRef()
+  const skillsRef = useRef()
+  const titleRef = useRef()
+
+  useEffect(() => {
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: skillsRef.current,
+        start: "top 80%",
+        end: "top 0%",
+        scrub: true,
+      }
+    });
+      
+    gsap.fromTo(
+      socialRef.current,
+      { y: -200, opacity: 0 },
+      { y: 0, opacity: 1, duration: 2, ease: "power2.out" }
+    );
+
+    gsap.fromTo(
+      aboutRef.current,
+      { x: -200, opacity: 0 },
+      { x: 0, opacity: 1, duration: 2, ease: "power2.out" }
+    );
+
+    tl.fromTo(skillsRef.current,
+      { y: 100, opacity: 0 },
+      { y: -100, opacity: 1, duration: 5, ease: "power2.out" }
+    );
+
+    gsap.fromTo(titleRef.current, {opacity:0}, {opacity:1, duration:15})
+
+  }, []);
+
   return (<>
     {/* <Navbar items={Nav}/> */}
-    <div className='flex justify-end px-[5em] gap-[4em] mt-[2em]'>
-      <a href="https://www.linkedin.com/in/vishwajeetsalunke" aria-label='LinkedIn'><LinkedInIcon/></a>
+    <div className='flex justify-end px-[5em] gap-[4em] mt-[2em]' ref={socialRef}>
+      <a href="https://www.linkedin.com/in/vishwajeetsalunke" aria-label='LinkedIn'><LinkedInIcon /></a>
       <a href="https://www.github.com/vishwajeetsalunke2080" aria-label='Github'><GitHubIcon /></a>
       <a href="https://www.instagram.com/vishwajeet_salunke" aria-label='Instagram'><InstagramIcon /></a>
     </div>
 
-    <div className='flex justify-start lg:text-8xl min-h-[3em] mb-[0.5em] mt-[2em] items-center ms-[1em]'>
-      <div><span className='mx-2'>Hello I&apos;m </span><div class="gradient-text p-2 font-bold">Vishwajeet Salunke</div></div>
+    <div className='flex justify-start text-8xl min-h-[3em] mb-[0.5em] mt-[2em] items-center ms-[1em]' ref={socialRef}>
+      <div><span className='mx-2'>Hello I&apos;m </span><div className="gradient-text p-2 font-bold">Vishwajeet Salunke</div></div>
     </div>
 
-    <section id="about">
+    <section id="about" ref={aboutRef}>
       <div className="flex justify-start text-xl p-2 text-justify px-[5em] mb-[5em]">
         {/* <div className=" px-[1.2em] py-[1em] lg:max-w-[50em]"> */}
-          {/* <div className="text-pink-300 font-bold lg:text-[3em] mb-[1.5em] " >
+        {/* <div className="text-pink-300 font-bold lg:text-[3em] mb-[1.5em] " >
             About Myself
           </div> */}
-          <p>A dedicated and enthusiastic web developer with a strong foundation in Next.js,
+        <p>A dedicated and enthusiastic web developer with a strong foundation in Next.js,
           Java, and Azure Cloud.
           love to create seamless and scalable web applications.
           and eager to leverage cloud technologies and modern frameworks to drive digital transformation</p>
@@ -140,16 +183,16 @@ const Home = () => {
     </section>
 
     <div className="flex justify-center flex-wrap px-[5em] gap-x-[10em] mb-[9em]">
-    <p className="px-[5em] text-center text-green-400 font-bold text-[4em] m-[2em]">Tech Stack</p>
-    <Skills skills={skills}/>
+      <p className="px-[5em] text-center text-green-400 font-bold text-[4em] mt-[2em] mx-[1em]" ref={skillsRef}>Tech Stack</p>
+      <Skills skills={skills} />
     </div>
 
     <div className="px-[5em]" id="Experience">
-      <EducationTimeline educationList={experience} title={"Experience"}/>
+      <EducationTimeline educationList={experience} title={"Experience"} />
     </div>
 
     <div className="px-[2em] m-[10em]" id="Projects">
-      <p className="px-[5em] text-center text-cyan-400 font-bold text-[4em] m-[2em]">Projects</p>
+      <p className="lg:px-[5em] text-center text-cyan-400 font-bold text-[4em] lg:mb-[2em] sm:mb-[2em] md:mb-[2em]">Projects</p>
       <ProjectCard projects={projectInfo} />
     </div>
 
